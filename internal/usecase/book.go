@@ -7,7 +7,7 @@ import (
 )
 
 type BookUsecase interface {
-	CreateBook(ctx context.Context) (*domain.Book, error)
+	CreateBook(ctx context.Context, book domain.Book) (*domain.Book, error)
 	GetByID(ctx context.Context, id string) (*domain.Book, error)
 	GetMany(ctx context.Context, limit, offset int) ([]domain.Book, error)
 }
