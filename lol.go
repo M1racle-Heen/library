@@ -9,3 +9,4 @@
 //        -> github.com
 //           -> Module
 //             -> go.mod
+package github
