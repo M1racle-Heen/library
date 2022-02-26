@@ -4,4 +4,8 @@
 // /cmd /delivery
 // main.go
 // go mod
-package library
+
+// src
+//        -> github.com
+//           -> Module
+//             -> go.mod
