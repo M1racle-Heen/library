@@ -1,7 +1,7 @@
 package domain
 
 type Book struct {
-	ID          int
+	ID          string
 	Name        string
 	Description string
 	ReleaseDate string
