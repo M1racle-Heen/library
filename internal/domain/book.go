@@ -3,7 +3,8 @@ package domain
 type Book struct {
 	ID          int
 	Name        string
-	Author      string
+	Description string
 	ReleaseDate string
+	Author      string
 	Genre       string
 }

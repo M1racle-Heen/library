@@ -13,6 +13,10 @@ type bookInteractor struct {
 }
 
 func NewBookInteractor(bookRepo repository.BookRepository) usecase.BookUsecase {
+	if bookRepo == nil {
+		panic("BookRepository argument is empty")
+	}
+
 	return bookInteractor{bookRepo: bookRepo}
 }
 
