@@ -1,6 +1,8 @@
 package interactor
 
 import (
+	"context"
+
 	"github.com/M1racle-Heen/library/internal/domain"
 	"github.com/M1racle-Heen/library/internal/repository"
 	"github.com/M1racle-Heen/library/internal/usecase"
@@ -21,9 +23,9 @@ func NewBookInteractor(bookRepo repository.BookRepo) usecase.BookUsecase {
 
 }
 
-func (interactor bookInteractor) Create(book domain.Book) (*domain.Book, error) {
+func (interactor bookInteractor) Create(ctx context.Context, book domain.Book) (*domain.Book, error) {
 
-	createdBook, err := interactor.bookRepo.Store(book)
+	createdBook, err := interactor.bookRepo.Store(ctx, book)
 
 	if err != nil {
 		return nil, err
@@ -33,8 +35,8 @@ func (interactor bookInteractor) Create(book domain.Book) (*domain.Book, error) 
 
 }
 
-func (interactor bookInteractor) Get(id string) (*domain.Book, error) {
-	book, err := interactor.bookRepo.Get(id)
+func (interactor bookInteractor) Get(ctx context.Context, id string) (*domain.Book, error) {
+	book, err := interactor.bookRepo.Get(ctx, id)
 
 	if err != nil {
 		return nil, err
@@ -44,6 +46,6 @@ func (interactor bookInteractor) Get(id string) (*domain.Book, error) {
 
 }
 
-func (interactor bookInteractor) Delete(id string) error {
-	return interactor.bookRepo.Remove(id)
+func (interactor bookInteractor) Delete(ctx context.Context, id string) error {
+	return interactor.bookRepo.Remove(ctx, id)
 }

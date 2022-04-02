@@ -1,6 +1,7 @@
 package interactor
 
 import (
+	"context"
 	"errors"
 	"testing"
 
@@ -108,7 +109,7 @@ func TestBookInteractor_Create(t *testing.T) {
 				bookRepo: &mocks.BookRepo{},
 			},
 			prepare: func(bookRepo *mocks.BookRepo, createdBook *domain.Book, err error) {
-				bookRepo.On("Store", mock.Anything).Return(createdBook, err)
+				bookRepo.On("Store", mock.Anything, mock.Anything).Return(createdBook, err)
 			},
 		},
 	}
@@ -120,7 +121,7 @@ func TestBookInteractor_Create(t *testing.T) {
 			bookRepo: tc.dependencies.bookRepo,
 		}
 
-		createdBook, err := interactor.Create(tc.arguments.book)
+		createdBook, err := interactor.Create(context.TODO(), tc.arguments.book)
 
 		assert.Equal(t, tc.expectations.createdBook, createdBook)
 		assert.Equal(t, tc.expectations.err, err)
@@ -156,7 +157,7 @@ func TestBookInteractor_Get(t *testing.T) {
 			expectations: expectations{getBook: &book, err: nil},
 			dependencies: dependencies{bookRepo: &mocks.BookRepo{}},
 			prepare: func(bookRepo *mocks.BookRepo, getBook *domain.Book, err error) {
-				bookRepo.On("Get", mock.Anything).Return(getBook, err)
+				bookRepo.On("Get", mock.Anything, mock.Anything).Return(getBook, err)
 			},
 		},
 		{
@@ -175,7 +176,7 @@ func TestBookInteractor_Get(t *testing.T) {
 
 		interactor := bookInteractor{bookRepo: tc.dependencies.bookRepo}
 
-		getBook, err := interactor.Get(tc.arguments.id)
+		getBook, err := interactor.Get(context.TODO(), tc.arguments.id)
 
 		assert.Equal(t, tc.expectations.getBook, getBook)
 		assert.Equal(t, tc.expectations.err, err)
@@ -208,7 +209,7 @@ func TestBookInteractor_Delete(t *testing.T) {
 			expectations: expectations{err: nil},
 			dependencies: dependencies{bookRepo: &mocks.BookRepo{}},
 			prepare: func(bookRepo *mocks.BookRepo, err error) {
-				bookRepo.On("Remove", mock.Anything).Return(err)
+				bookRepo.On("Remove", mock.Anything, mock.Anything).Return(err)
 			},
 		},
 		{
@@ -224,7 +225,7 @@ func TestBookInteractor_Delete(t *testing.T) {
 	for _, tc := range testCases {
 		tc.prepare(tc.dependencies.bookRepo, tc.expectations.err)
 		interactor := bookInteractor{bookRepo: tc.dependencies.bookRepo}
-		err := interactor.Delete(tc.arguments.id)
+		err := interactor.Delete(context.TODO(), tc.arguments.id)
 		assert.Equal(t, tc.expectations.err, err)
 	}
 }
